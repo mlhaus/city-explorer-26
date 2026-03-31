@@ -7,3 +7,10 @@ PORT=5000
 LOCATIONIQ_KEY=
 YELP_KEY=
 ```
+## Run the project
+Enter these commands to build and run the project.
+```
+npm install
+npx nodemon .
+```
+Visit http://localhost:5000 to view the live site.
