@@ -33,7 +33,6 @@ locationForm.addEventListener('submit', async (event) => {
         } else {
             apiUrl = 'http://localhost:5000/location'
         }
-        apiUrl = 'http://localhost:5000/location'
         apiUrl += `?${params}`;
         const myApiResponse = await fetch(apiUrl);
         if(myApiResponse.status !== 200) {
