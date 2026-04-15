@@ -159,3 +159,5 @@ const MovieTheater = function (json) {
 
 // App listener
 app.listen(port, () => console.log(`Listening on port ${port}`));
+
+module.exports = app;
