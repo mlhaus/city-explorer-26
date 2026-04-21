@@ -26,13 +26,7 @@ locationForm.addEventListener('submit', async (event) => {
             search: locationInputFromUser
         });
 
-        let apiUrl = '';
-        if(location.protocol === 'https:') {
-            apiUrl = `${location.origin}/location`;
-        } else {
-            apiUrl = 'http://localhost:5000/location'
-        }
-        apiUrl += `?${params}`;
+        const apiUrl = `/location?${params}`;
         const myApiResponse = await fetch(apiUrl);
         if(myApiResponse.status !== 200) {
             throw new Error(myApiResponse.statusText);

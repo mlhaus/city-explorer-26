@@ -3,14 +3,15 @@ const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
 const superagent = require('superagent');
-
+const { connectAll } = require('../config/db');
+connectAll(); // Initialize the database
 // Setup Application
 const app = express();
 const port = process.env.PORT || 3000;
 const env = process.env.APP_ENV || 'development';
 let origin = '';
 if (env === 'development') {
-    origin = 'http://localhost:5000';
+    origin = `http://localhost:${port}`;
 } else {
     origin = 'https://city-explorer-26.vercel.app/';
 }
@@ -22,6 +23,28 @@ app.use(cors({
 
 // Route definitions
 app.use(express.static('./public'));
+const todosRouter = require('../routes/todos');
+app.use("/api/todos", todosRouter);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 app.get('/location', locationHandler);
 
 async function locationHandler(req, res) {
