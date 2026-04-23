@@ -10,16 +10,15 @@
     <link href="./output.css" rel="stylesheet">
 </head>
 <body class="bg-gray-400">
-<div class="container">
-    <header>
-        <h1 id="main-heading">Todo List</h1>
+<div class="tailwind-container mx-auto">
+    <header class="flex justify-center items-center mb-5">
+        <h1 id="main-heading" class="text-3xl/10 text-black">Todo List</h1>
     </header>
 
     <nav>
         <ul>
-            <li><a href="index.html" class="active">Todo List</a></li>
-            <li><a href="planets.html">Planets Tracker</a></li>
-            <li><a href="city.html">City Explorer</a> </li>
+            <li><a href="index.html">City Explorer</a></li>
+            <li><a href="todos.html" class="active">Todo List</a> </li>
         </ul>
     </nav>
 
@@ -78,11 +77,11 @@
 
     <button id="clear" type="button" class="btn-clear">Clear All</button>
 </div>
-<div id="spinner-container">
-    <div class="spinner">
-        <i class="fa fa-spin fa-spinner"></i> Loading...
-    </div>
-</div>
+<!--<div id="spinner-container">-->
+<!--    <div class="spinner">-->
+<!--        <i class="fa fa-spin fa-spinner"></i> Loading...-->
+<!--    </div>-->
+<!--</div>-->
 
 <script src="./todos.js"></script>
 </body>

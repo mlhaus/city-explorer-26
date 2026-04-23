@@ -21,6 +21,10 @@ app.use(cors({
     allowedHeaders: ['Content-Type']
 }));
 
+// Body parser middleware - Needed to get JSON data from the frontend
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 // Route definitions
 app.use(express.static('./public'));
 const todosRouter = require('../routes/todos');
