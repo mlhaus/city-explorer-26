@@ -32,7 +32,53 @@ app.use("/api/todos", todosRouter);
 
 
 
+app.get('/movies', movieHandler);
 
+async function movieHandler(req, res) {
+    try {
+        const search = req.query.search;
+
+        if (search === null || search === undefined || search === '') {
+            res.status(400).send('Please enter a valid search query');
+            return;
+        }
+        const responseObj = {};
+
+        let url = 'https://api.themoviedb.org/3/search/movie';
+        const tmdbResponse = await superagent.get(url).query({
+            query: search,
+            include_adult: false,
+            language: 'en-US',
+            page: 1
+        }).set('Authorization', `Bearer ${process.env.OMDB_READ_ACCESS_TOKEN}`)
+            .set('accept', 'application/json');
+
+        url = 'https://api.themoviedb.org/3/genre/movie/list';
+        const tmdbGenreResponse = await superagent.get(url)
+            .set('Authorization', `Bearer ${process.env.OMDB_READ_ACCESS_TOKEN}`)
+            .set('accept', 'application/json');
+        const genres = tmdbGenreResponse.body.genres
+
+        const movieArr = tmdbResponse.body.results.map(movie => {
+            // Create a lookup dictionary for faster access
+            const genreMap = genres.reduce((acc, genre) => {
+                acc[genre.id] = genre.name;
+                return acc;
+            }, {});
+
+            // Map the IDs to names
+            movie.genres = movie.genre_ids.map(id => genreMap[id]).join(', ');
+            return new Movie(movie);
+        });
+        responseObj.movieData = movieArr;
+        res.status(200).send(responseObj);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Something went wrong!');
+    }
+
+}
 
 
 
@@ -182,6 +228,14 @@ const MovieTheater = function (json) {
     this.city = json.city;
     this.state = json.state;
     this.postcode = json.postcode;
+}
+
+const Movie = function (json) {
+    this.title = json.title;
+    this.overview = json.overview;
+    this.poster_path = json.poster_path;
+    this.release_date = json.release_date;
+    this.genres = json.genres;
 }
 
 // App listener
